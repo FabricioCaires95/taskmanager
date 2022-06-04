@@ -1,0 +1,29 @@
+# =================================
+# = Server
+# =================================
+server:
+  port: 8080
+  servlet:
+    context-path: /v1
+
+
+# =================================
+# = Spring
+# =================================
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/db_taskmanager
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    type: com.zaxxer.hikari.HikariDataSource
+
+# =================================
+# = Logging
+# =================================
+logging:
+  level:
+    org.springframework: INFO
+    org.flywaydb: INFO

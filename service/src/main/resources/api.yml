@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: taskmanager
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /tasks:
+    post:
+      summary: 'creates a task'
+      operationId: createTask
+      tags:
+        - task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskDTO'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+
+components:
+  schemas:
+    CreateTaskDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        finishAt:
+          type: string
+          format: date-time
+
+    TaskDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/CreateTaskDTO'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            isFinished:
+              type: boolean
+            createdAt:
+              type: string
+              format: date-time
+
+    ResponseError:
+      type: object
+      required:
+        - field
+        - errorCode
+      properties:
+        field:
+          type: string
+        errorCode:
+          type: string
+
+  responses:
+    UnprocessableEntity:
+      description: The server understands the content type of the request entity but was unable to process
+        the contained instructions.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ResponseError'
