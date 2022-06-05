@@ -4,6 +4,7 @@ import static br.com.spacer.taskmanager.utils.MapperUtils.taskMapper;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateTaskDTO;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newTask;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import br.com.spacer.taskmanager.core.BaseUnitTest;
 import br.com.spacer.taskmanager.mapper.TaskMapper;
@@ -29,6 +30,7 @@ class TaskMapperUnitTest extends BaseUnitTest {
         assertEquals(entity.getDescription(), dto.getDescription());
         assertEquals(entity.getFinishAt(), dto.getFinishAt());
         assertEquals(entity.getCreatedAt(), dto.getCreatedAt());
+        assertFalse(dto.getIsFinished());
     }
 
     @Test
