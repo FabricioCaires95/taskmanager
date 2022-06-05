@@ -19,6 +19,8 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASS}
     type: com.zaxxer.hikari.HikariDataSource
+  flyway:
+    locations: classpath:/db/migration/postgresql
 
 # =================================
 # = Logging
