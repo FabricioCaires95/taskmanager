@@ -23,7 +23,7 @@ public abstract class BaseIntegrationTest {
     private int serverPort;
 
     @BeforeEach
-    void setup() throws Exception {
+    void setUp() throws Exception {
         setupFlyway();
         setupEach();
     }

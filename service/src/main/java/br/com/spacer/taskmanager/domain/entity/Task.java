@@ -16,7 +16,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_task")
+@Table(name = "task")
 public class Task {
 
     @Id
@@ -84,14 +84,12 @@ public class Task {
 
     @PrePersist
     public void prePersist() {
+        isFinished = Boolean.FALSE;
+
         if (isNull(createdAt)) {
             createdAt = now();
         }
         updatedAt = createdAt;
-
-        if (isNull(isFinished)) {
-            isFinished = Boolean.FALSE;
-        }
     }
 
     @PreUpdate

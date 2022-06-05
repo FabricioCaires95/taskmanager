@@ -1,6 +1,8 @@
 package br.com.spacer.taskmanager.integration;
 
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateTaskDTO;
+import static br.com.spacer.taskmanager.utils.TestDataCreator.newTask;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -33,4 +35,16 @@ class TaskApiIntegrationTest extends BaseIntegrationTest {
         assertFalse(entitySaved.getIsFinished());
     }
 
+    @Test
+    void testGetTaskByIdSuccess() {
+        var task = newTask().build();
+        taskRepository.saveAndFlush(task);
+
+        var result = api.getTask(task.getId());
+
+        assertNotNull(result);
+        assertEquals(result.getTitle(), task.getTitle());
+        assertEquals(result.getDescription(), task.getDescription());
+        assertEquals(result.getFinishAt(), task.getFinishAt());
+    }
 }

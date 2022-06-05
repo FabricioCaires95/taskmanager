@@ -1,4 +1,4 @@
-CREATE TABLE tb_task (
+CREATE TABLE task (
 	id uuid NOT NULL,
 	title varchar(100) NOT NULL,
 	description varchar(250) NOT NULL,

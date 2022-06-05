@@ -27,6 +27,30 @@ paths:
         422:
           $ref: '#/components/responses/UnprocessableEntity'
 
+  /tasks/{id}:
+    get:
+      summary: 'Return a Task by ID'
+      operationId: getTask
+      tags:
+        - task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+        404:
+          description: Not Found
+
 components:
   schemas:
     CreateTaskDTO:
