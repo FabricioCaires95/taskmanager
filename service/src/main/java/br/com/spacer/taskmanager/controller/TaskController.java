@@ -1,5 +1,6 @@
 package br.com.spacer.taskmanager.controller;
 
+import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 import java.util.UUID;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.spacer.taskmanager.api.facade.TasksApi;
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
 import br.com.spacer.taskmanager.api.model.TaskDTO;
+import br.com.spacer.taskmanager.api.model.UpdateTaskDTO;
 import br.com.spacer.taskmanager.service.TaskService;
 import br.com.spacer.taskmanager.utils.ResponseEntityUtils;
 
@@ -34,5 +36,17 @@ public class TaskController implements TasksApi {
     public CompletableFuture<ResponseEntity<TaskDTO>> createTask(CreateTaskDTO createTaskDTO) {
         return supplyAsync(() -> taskService.createTask(createTaskDTO), controllersExecutors)
                 .thenApply(ResponseEntityUtils::created);
+    }
+
+    @Override
+    public CompletableFuture<ResponseEntity<Void>> updateTask(UUID id, UpdateTaskDTO updateTaskDTO) {
+        return runAsync(() -> taskService.updateTask(id, updateTaskDTO), controllersExecutors)
+                .thenApply(ResponseEntityUtils::noContent);
+    }
+
+    @Override
+    public CompletableFuture<ResponseEntity<Void>> deleteTask(UUID id) {
+        return runAsync(() -> taskService.deleteTask(id), controllersExecutors)
+                .thenApply(ResponseEntityUtils::noContent);
     }
 }

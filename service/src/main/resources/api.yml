@@ -51,8 +51,65 @@ paths:
         404:
           description: Not Found
 
+    put:
+      summary: 'Update a Task By ID'
+      operationId: updateTask
+      tags:
+        - task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of the task
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskDTO'
+        required: true
+      responses:
+        204:
+          description: 'Updated Successfully'
+        404:
+          description: 'Not Found'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+
+    delete:
+      summary: 'Deletes a task by ID'
+      operationId: deleteTask
+      tags:
+        - task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: 'Deleted Successfully'
+        404:
+          description: Not Found
+
 components:
   schemas:
+    UpdateTaskDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        finishAt:
+          type: string
+          format: date-time
+
     CreateTaskDTO:
       type: object
       properties:
