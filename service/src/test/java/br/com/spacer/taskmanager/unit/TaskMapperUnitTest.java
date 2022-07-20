@@ -3,6 +3,7 @@ package br.com.spacer.taskmanager.unit;
 import static br.com.spacer.taskmanager.utils.MapperUtils.taskMapper;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateTaskDTO;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newTask;
+import static br.com.spacer.taskmanager.utils.TestDataCreator.newUpdateTaskDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -44,4 +45,14 @@ class TaskMapperUnitTest extends BaseUnitTest {
         assertEquals(entity.getFinishAt(), createDto.getFinishAt());
     }
 
+    @Test
+    void testMappingUpdateDtoToEntity() {
+        var updateDto = newUpdateTaskDTO();
+
+        var entity = victim.fromUpdateDtoToEntity(updateDto);
+
+        assertEquals(entity.getDescription(), updateDto.getDescription());
+        assertEquals(entity.getTitle(), updateDto.getTitle());
+        assertEquals(entity.getDescription(), updateDto.getDescription());
+    }
 }

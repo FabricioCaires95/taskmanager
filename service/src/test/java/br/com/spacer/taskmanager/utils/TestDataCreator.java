@@ -8,6 +8,7 @@ import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_TITLE;
 import static br.com.spacer.taskmanager.utils.TestConstants.IS_FINISHED;
 
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
+import br.com.spacer.taskmanager.api.model.UpdateTaskDTO;
 import br.com.spacer.taskmanager.domain.entity.Task;
 
 public final class TestDataCreator {
@@ -26,5 +27,9 @@ public final class TestDataCreator {
 
     public static CreateTaskDTO newCreateTaskDTO() {
         return new CreateTaskDTO().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).finishAt(DEFAULT_FINISH);
+    }
+
+    public static UpdateTaskDTO newUpdateTaskDTO() {
+        return new UpdateTaskDTO().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).finishAt(DEFAULT_FINISH);
     }
 }

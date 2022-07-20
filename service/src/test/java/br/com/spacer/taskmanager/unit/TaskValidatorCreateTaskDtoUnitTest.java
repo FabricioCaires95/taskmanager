@@ -21,7 +21,7 @@ import br.com.spacer.taskmanager.validator.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TaskValidatorUnitTest extends BaseUnitTest {
+class TaskValidatorCreateTaskDtoUnitTest extends BaseUnitTest {
 
     private TaskValidator victim;
 

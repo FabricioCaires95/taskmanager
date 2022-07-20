@@ -13,6 +13,7 @@ import static br.com.spacer.taskmanager.validator.ValidationUtils.validateRequir
 import java.time.OffsetDateTime;
 import org.springframework.stereotype.Component;
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
+import br.com.spacer.taskmanager.api.model.UpdateTaskDTO;
 
 @Component
 public class TaskValidator {
@@ -23,6 +24,17 @@ public class TaskValidator {
         validateDescription(createTaskDTO.getDescription(), validationErrors);
         validateTitle(createTaskDTO.getTitle(), validationErrors);
         validateDate(createTaskDTO.getFinishAt(), validationErrors);
+
+        throwOnError(validationErrors);
+
+    }
+
+    public void validate(UpdateTaskDTO updateTaskDto) {
+        var validationErrors = new ValidationErrors();
+
+        validateDescription(updateTaskDto.getDescription(), validationErrors);
+        validateTitle(updateTaskDto.getTitle(), validationErrors);
+        validateDate(updateTaskDto.getFinishAt(), validationErrors);
 
         throwOnError(validationErrors);
 
