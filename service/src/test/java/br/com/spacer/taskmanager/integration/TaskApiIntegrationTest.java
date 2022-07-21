@@ -3,6 +3,7 @@ package br.com.spacer.taskmanager.integration;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_ID;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateTaskDTO;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newTask;
+import static br.com.spacer.taskmanager.utils.TestDataCreator.newUpdateTaskDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -62,4 +63,32 @@ class TaskApiIntegrationTest extends BaseIntegrationTest {
             HttpClientErrorException.NotFound.class,
             () -> api.getTask(DEFAULT_ID));
     }
+
+    @Test
+    void testUpdateTaskSuccess() {
+        var task = taskRepository.saveAndFlush(newTask().build());
+
+        var updateTaskDTO = newUpdateTaskDTO()
+                .description(task.getDescription().concat("-desc test"))
+                .title(task.getTitle().concat("-title test"))
+                .finishAt(task.getFinishAt().plusDays(3));
+
+        api.updateTask(task.getId(), updateTaskDTO);
+
+        var taskUpdated = taskRepository.findById(task.getId()).orElseThrow();
+
+        assertNotNull(taskUpdated);
+        assertEquals(taskUpdated.getTitle(), updateTaskDTO.getTitle());
+        assertEquals(taskUpdated.getDescription(), updateTaskDTO.getDescription());
+        assertEquals(taskUpdated.getFinishAt(), updateTaskDTO.getFinishAt());
+    }
+
+    @Test
+    void testUpdateTaskIdNotExist() {
+        assertThrows(
+                HttpClientErrorException.class,
+                () -> api.updateTask(DEFAULT_ID, newUpdateTaskDTO())
+        );
+    }
+
 }

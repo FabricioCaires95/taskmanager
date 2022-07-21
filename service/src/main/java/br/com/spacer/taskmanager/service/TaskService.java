@@ -1,10 +1,14 @@
 package br.com.spacer.taskmanager.service;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
 import br.com.spacer.taskmanager.api.model.TaskDTO;
 import br.com.spacer.taskmanager.api.model.UpdateTaskDTO;
+import br.com.spacer.taskmanager.domain.entity.Task;
 import br.com.spacer.taskmanager.domain.repository.TaskRepository;
 import br.com.spacer.taskmanager.exception.TaskNotFoundException;
 import br.com.spacer.taskmanager.mapper.TaskMapper;
@@ -24,10 +28,7 @@ public class TaskService {
     }
 
     public TaskDTO getTaskById(UUID id) {
-        var task = taskRepository
-                .findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task not found "));
-
+        var task = getTaskByIdOrThrowNotFound(id);
         return taskMapper.fromEntityToDto(task);
     }
 
@@ -39,12 +40,21 @@ public class TaskService {
         return taskMapper.fromEntityToDto(savedTask);
     }
 
+    @Transactional
     public void updateTask(UUID id, UpdateTaskDTO updateTaskDTO) {
-        //TODO
+        taskValidator.validate(updateTaskDTO);
+        getTaskByIdOrThrowNotFound(id);
+        taskRepository.updateTask(id, updateTaskDTO.getTitle(), updateTaskDTO.getDescription(), updateTaskDTO.getFinishAt());
     }
 
     public void deleteTask(UUID id) {
         //TODO
     }
 
+    private Task getTaskByIdOrThrowNotFound(UUID id) {
+        requireNonNull(id);
+        return taskRepository
+                .findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found "));
+    }
 }
