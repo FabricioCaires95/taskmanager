@@ -6,6 +6,7 @@ import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateTaskDTO;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newTask;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -69,4 +70,12 @@ class TaskServiceUnitTest extends BaseUnitTest {
         assertThrows(TaskNotFoundException.class, () -> victim.getTaskById(DEFAULT_ID));
     }
 
+    @Test
+    void testGetTaskByIdNotFound2() {
+        when(taskRepository.findById(any())).thenReturn(empty());;
+        assertThatThrownBy(() ->
+                victim.getTaskById(DEFAULT_ID))
+                .hasMessage("Task not found ")
+                .isInstanceOf(TaskNotFoundException.class);
+    }
 }

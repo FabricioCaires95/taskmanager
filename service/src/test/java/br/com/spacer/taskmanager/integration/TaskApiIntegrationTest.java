@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import br.com.spacer.taskmanager.api.facade.TaskApi;
 import br.com.spacer.taskmanager.core.BaseIntegrationTest;
 import br.com.spacer.taskmanager.domain.repository.TaskRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 class TaskApiIntegrationTest extends BaseIntegrationTest {
@@ -91,4 +92,12 @@ class TaskApiIntegrationTest extends BaseIntegrationTest {
         );
     }
 
+    @Test
+    void testErrorWhenTitleDoesNotExist() {
+        var task = taskRepository.saveAndFlush(newTask().build());
+        assertThrows(
+                HttpClientErrorException.class,
+                () -> api.updateTask(task.getId(), newUpdateTaskDTO().title(StringUtils.EMPTY))
+        );
+    }
 }
