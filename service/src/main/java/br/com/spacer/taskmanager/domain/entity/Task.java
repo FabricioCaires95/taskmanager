@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -35,6 +37,10 @@ public class Task {
     @Column(name = "is_finished", nullable = false)
     private Boolean isFinished;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
@@ -47,6 +53,7 @@ public class Task {
         this.description = builder.description;
         this.finishAt = builder.finishAt;
         this.isFinished = builder.isFinished;
+        this.user = builder.user;
         this.createdAt = builder.createdAt;
         this.updatedAt = builder.updatedAt;
     }
@@ -102,18 +109,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return  Objects.equals(id, task.id) &&
-                Objects.equals(title, task.title) &&
-                Objects.equals(description, task.description) &&
-                Objects.equals(finishAt, task.finishAt) &&
-                Objects.equals(isFinished, task.isFinished) &&
-                Objects.equals(createdAt, task.createdAt) &&
-                Objects.equals(updatedAt, task.updatedAt);
+        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(finishAt, task.finishAt) && Objects.equals(isFinished, task.isFinished) && Objects.equals(user, task.user) && Objects.equals(createdAt, task.createdAt) && Objects.equals(updatedAt, task.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, finishAt, isFinished, createdAt, updatedAt);
+        return Objects.hash(id, title, description, finishAt, isFinished, user, createdAt, updatedAt);
     }
 
     @Override
@@ -124,6 +125,7 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", finishAt=" + finishAt +
                 ", isFinished=" + isFinished +
+                ", user=" + user +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
@@ -139,6 +141,7 @@ public class Task {
         private String description;
         private OffsetDateTime finishAt;
         private Boolean isFinished;
+        private User user;
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
 
@@ -167,6 +170,11 @@ public class Task {
 
         public Builder isFinished(Boolean isFinished) {
             this.isFinished = isFinished;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
             return this;
         }
 
