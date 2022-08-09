@@ -1,4 +1,4 @@
-CREATE TABLE user (
+CREATE TABLE tb_user (
 	id uuid NOT NULL,
 	name varchar(255) NOT NULL,
 	email varchar(200) NOT NULL,
