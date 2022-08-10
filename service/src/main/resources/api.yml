@@ -97,6 +97,30 @@ paths:
         404:
           description: Not Found
 
+  /users:
+    post:
+      summary: 'Creates an User'
+      operationId: createUser
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDTO'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+        404:
+          description: 'Not Found'
+
 components:
   schemas:
     UpdateTaskDTO:
@@ -135,6 +159,36 @@ components:
             createdAt:
               type: string
               format: date-time
+
+    UpdateUserDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    CreateUserDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UpdateUserDTO'
+        - type: object
+
+    UserDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UpdateUserDTO'
+        - type: object
+          properties:
+            uuid:
+              type: integer
+              format: int64
+            tasks:
+              type: array
+              items:
+                $ref: '#/components/schemas/TaskDTO'
 
     ResponseError:
       type: object
