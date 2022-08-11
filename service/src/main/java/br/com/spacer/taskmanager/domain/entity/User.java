@@ -1,5 +1,8 @@
 package br.com.spacer.taskmanager.domain.entity;
 
+import static br.com.spacer.taskmanager.utils.DateUtils.now;
+import static java.util.Objects.isNull;
+
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -43,13 +48,27 @@ public class User {
     }
 
     private User(Builder builder) {
-        this.id = builder.uuid;
+        this.id = builder.id;
         this.name = builder.name;
         this.email = builder.email;
         this.password = builder.password;
         this.tasks = builder.tasks;
         this.createdAt = builder.createAt;
         this.updatedAt = builder.updatedAt;
+    }
+
+
+    @PrePersist
+    public void prePersist() {
+        if (isNull(createdAt)) {
+            createdAt = now();
+        }
+        updatedAt = createdAt;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = now();
     }
 
     @Override
@@ -83,7 +102,7 @@ public class User {
     }
 
     public static final class Builder {
-        private UUID uuid;
+        private UUID id;
         private String name;
         private String email;
         private String password;
@@ -94,8 +113,8 @@ public class User {
         private Builder() {
         }
 
-        public Builder uuid(UUID uuid) {
-            this.uuid = uuid;
+        public Builder id(UUID id) {
+            this.id = id;
             return this;
         }
 

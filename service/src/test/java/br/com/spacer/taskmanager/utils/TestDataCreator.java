@@ -5,11 +5,17 @@ import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_DESCRIPTION;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_FINISH;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_ID;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_TITLE;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_EMAIL;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_ID;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_NAME;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_PASSWORD;
 import static br.com.spacer.taskmanager.utils.TestConstants.IS_FINISHED;
+import static java.util.Collections.singleton;
 
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
 import br.com.spacer.taskmanager.api.model.UpdateTaskDTO;
 import br.com.spacer.taskmanager.domain.entity.Task;
+import br.com.spacer.taskmanager.domain.entity.User;
 
 public final class TestDataCreator {
 
@@ -31,5 +37,15 @@ public final class TestDataCreator {
 
     public static UpdateTaskDTO newUpdateTaskDTO() {
         return new UpdateTaskDTO().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).finishAt(DEFAULT_FINISH);
+    }
+
+    public static User.Builder newUser() {
+        return User.newUser()
+            .id(DEFAULT_USER_ID)
+            .name(DEFAULT_USER_NAME)
+            .email(DEFAULT_USER_EMAIL)
+            .password(DEFAULT_USER_PASSWORD)
+            .tasks(singleton(newTask().build()))
+            .createdAt(CREATED_AT);
     }
 }
