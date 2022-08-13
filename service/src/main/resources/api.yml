@@ -172,9 +172,13 @@ components:
 
     CreateUserDTO:
       type: object
-      allOf:
-        - $ref: '#/components/schemas/UpdateUserDTO'
-        - type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
 
     UserDTO:
       type: object
@@ -182,9 +186,9 @@ components:
         - $ref: '#/components/schemas/UpdateUserDTO'
         - type: object
           properties:
-            uuid:
-              type: integer
-              format: int64
+            id:
+              type: string
+              format: uuid
             tasks:
               type: array
               items:

@@ -13,7 +13,9 @@ import static br.com.spacer.taskmanager.utils.TestConstants.IS_FINISHED;
 import static java.util.Collections.singleton;
 
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
+import br.com.spacer.taskmanager.api.model.CreateUserDTO;
 import br.com.spacer.taskmanager.api.model.UpdateTaskDTO;
+import br.com.spacer.taskmanager.api.model.UpdateUserDTO;
 import br.com.spacer.taskmanager.domain.entity.Task;
 import br.com.spacer.taskmanager.domain.entity.User;
 
@@ -47,5 +49,13 @@ public final class TestDataCreator {
             .password(DEFAULT_USER_PASSWORD)
             .tasks(singleton(newTask().build()))
             .createdAt(CREATED_AT);
+    }
+
+    public static CreateUserDTO newCreateUserDTO() {
+        return new CreateUserDTO().name(DEFAULT_USER_NAME).email(DEFAULT_USER_EMAIL).password(DEFAULT_USER_PASSWORD);
+    }
+
+    public static UpdateUserDTO newUpdateUserDTO() {
+        return new UpdateUserDTO().name(DEFAULT_USER_NAME).email(DEFAULT_USER_EMAIL).password(DEFAULT_USER_PASSWORD);
     }
 }

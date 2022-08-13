@@ -47,6 +47,34 @@ public class User {
     public User() {
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     private User(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
