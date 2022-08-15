@@ -5,15 +5,20 @@ import static br.com.spacer.taskmanager.validator.ValidationConstants.BELLOW_MIN
 import static br.com.spacer.taskmanager.validator.ValidationConstants.EXCEEDS_MAX_LENGTH;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.EXCEEDS_MAX_VALUE;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.FINISH_AT;
+import static br.com.spacer.taskmanager.validator.ValidationConstants.INVALID_EMAIL;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.IN_THE_PAST;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.MISSING_FIELD;
+import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_EMAIL;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import java.time.OffsetDateTime;
+import java.util.regex.Pattern;
 import br.com.spacer.taskmanager.exception.InvalidRequestException;
 
 public final class ValidationUtils {
+
+    private static final String EMAIL_PATTERN = "^(.+)@(\\S+)$";
 
     private ValidationUtils() {}
 
@@ -76,6 +81,17 @@ public final class ValidationUtils {
     ) {
         if (!isNull(field) && field < minValue) {
             validationErrors.add(fieldName, fieldName + BELLOW_MIN_VALUE);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isEmailValid(String email, ValidationErrors validationErrors) {
+        if (!validateRequired(email, USER_EMAIL, validationErrors)) {
+            return false;
+        }
+        if (!Pattern.compile(EMAIL_PATTERN).matcher(email).matches()) {
+            validationErrors.add(USER_EMAIL, USER_EMAIL + INVALID_EMAIL);
             return false;
         }
         return true;

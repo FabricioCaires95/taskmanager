@@ -10,7 +10,13 @@ public final class ValidationConstants {
     public static final String EXCEEDS_MAX_VALUE = ".exceedsMaxValue";
     public static final String BELLOW_MIN_VALUE = ".bellowMinValue";
     public static final String IN_THE_PAST = ".inThePast";
+    public static final String USER_NAME = "name";
+    public static final String USER_EMAIL = "email";
+    public static final String INVALID_EMAIL = ".invalidEmail";
+
+
     public static final int MAX_LENGTH_DESCRIPTION = 250;
+    public static final int MAX_LENGTH_NAME = 255;
     public static final int MAX_LENGTH_TITLE = 100;
 
     private ValidationConstants() {}
