@@ -3,10 +3,12 @@ package br.com.spacer.taskmanager.unit;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateUserDTO;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.EXCEEDS_MAX_LENGTH;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.INVALID_EMAIL;
+import static br.com.spacer.taskmanager.validator.ValidationConstants.INVALID_PASSWORD;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.MAX_LENGTH_NAME;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.MISSING_FIELD;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_EMAIL;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_NAME;
+import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_PASSWORD;
 import static org.apache.commons.lang3.StringUtils.rightPad;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,6 +18,7 @@ import br.com.spacer.taskmanager.core.BaseUnitTest;
 import br.com.spacer.taskmanager.exception.InvalidRequestException;
 import br.com.spacer.taskmanager.validator.UserValidator;
 import br.com.spacer.taskmanager.validator.ValidationError;
+import br.com.spacer.taskmanager.validator.ValidationErrors;
 import br.com.spacer.taskmanager.validator.ValidationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,5 +94,27 @@ class UserValidatorTest extends BaseUnitTest {
     @ValueSource(strings = {"joao@gmail.com", "test.123@hotmail.com"})
     void testValidateEmailSuccessful(String email) {
         assertTrue(ValidationUtils.isEmailValid(email, null));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aD@fec", "fh1@F", "DD12#2", "abC1234", "abc@123"})
+    void testValidateViolatingPasswordRules(String password) {
+        var exception = assertThrows(
+                InvalidRequestException.class,
+                () -> victim.validate(newCreateUserDTO().password(password))
+        );
+
+        assertEquals(1, exception.getValidationErrors().getNumberErrors());
+        assertEquals(
+                new ValidationError(USER_PASSWORD, USER_PASSWORD + INVALID_PASSWORD),
+                exception.getValidationErrors().getError(0)
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"abC#17", "12@Hpucxz"})
+    void testValidatePasswordRulesSuccessful(String password) {
+        var validationErrors = new ValidationErrors();
+        assertTrue(ValidationUtils.isPasswordValid(password, validationErrors));
     }
 }

@@ -12,7 +12,9 @@ public final class ValidationConstants {
     public static final String IN_THE_PAST = ".inThePast";
     public static final String USER_NAME = "name";
     public static final String USER_EMAIL = "email";
+    public static final String USER_PASSWORD = "password";
     public static final String INVALID_EMAIL = ".invalidEmail";
+    public static final String INVALID_PASSWORD = ".invalidPassword";
 
 
     public static final int MAX_LENGTH_DESCRIPTION = 250;

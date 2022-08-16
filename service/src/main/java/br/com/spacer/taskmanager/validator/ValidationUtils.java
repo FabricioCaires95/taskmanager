@@ -6,9 +6,11 @@ import static br.com.spacer.taskmanager.validator.ValidationConstants.EXCEEDS_MA
 import static br.com.spacer.taskmanager.validator.ValidationConstants.EXCEEDS_MAX_VALUE;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.FINISH_AT;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.INVALID_EMAIL;
+import static br.com.spacer.taskmanager.validator.ValidationConstants.INVALID_PASSWORD;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.IN_THE_PAST;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.MISSING_FIELD;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_EMAIL;
+import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_PASSWORD;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -19,6 +21,7 @@ import br.com.spacer.taskmanager.exception.InvalidRequestException;
 public final class ValidationUtils {
 
     private static final String EMAIL_PATTERN = "^(.+)@(\\S+)$";
+    private static final String PASSWORD_PATTERN = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$";
 
     private ValidationUtils() {}
 
@@ -94,6 +97,15 @@ public final class ValidationUtils {
             validationErrors.add(USER_EMAIL, USER_EMAIL + INVALID_EMAIL);
             return false;
         }
+        return true;
+    }
+
+    public static boolean isPasswordValid(String password, ValidationErrors validationErrors) {
+        if (!Pattern.compile(PASSWORD_PATTERN).matcher(password).matches()) {
+            validationErrors.add(USER_PASSWORD, USER_PASSWORD + INVALID_PASSWORD);
+            return false;
+        }
+
         return true;
     }
 }

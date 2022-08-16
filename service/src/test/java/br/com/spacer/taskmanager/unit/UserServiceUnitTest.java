@@ -19,6 +19,7 @@ import br.com.spacer.taskmanager.core.BaseUnitTest;
 import br.com.spacer.taskmanager.domain.repository.UserRepository;
 import br.com.spacer.taskmanager.exception.UserNotFoundException;
 import br.com.spacer.taskmanager.service.UserService;
+import br.com.spacer.taskmanager.validator.UserValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,9 +30,12 @@ class UserServiceUnitTest extends BaseUnitTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private UserValidator userValidator;
+
     @BeforeEach
     void beforeEach() {
-        victim = new UserService(userRepository, userMapper());
+        victim = new UserService(userRepository, userMapper(), userValidator);
     }
 
     @Test
@@ -46,6 +50,7 @@ class UserServiceUnitTest extends BaseUnitTest {
         assertEquals(userDto.getPassword(), createUserDTO.getPassword());
 
         verify(userRepository).save(any());
+        verify(userValidator).validate(createUserDTO);
     }
 
     @Test

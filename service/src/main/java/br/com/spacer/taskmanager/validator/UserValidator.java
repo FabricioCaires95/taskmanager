@@ -1,12 +1,11 @@
 package br.com.spacer.taskmanager.validator;
 
 import static br.com.spacer.taskmanager.validator.ValidationConstants.MAX_LENGTH_NAME;
-import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_EMAIL;
 import static br.com.spacer.taskmanager.validator.ValidationConstants.USER_NAME;
 import static br.com.spacer.taskmanager.validator.ValidationUtils.isEmailValid;
+import static br.com.spacer.taskmanager.validator.ValidationUtils.isPasswordValid;
 import static br.com.spacer.taskmanager.validator.ValidationUtils.throwOnError;
 import static br.com.spacer.taskmanager.validator.ValidationUtils.validateMaxLength;
-import static br.com.spacer.taskmanager.validator.ValidationUtils.validateMinValue;
 import static br.com.spacer.taskmanager.validator.ValidationUtils.validateRequired;
 
 import org.springframework.stereotype.Component;
@@ -48,8 +47,7 @@ public class UserValidator {
     }
 
     private void validatePassword(String password, ValidationErrors validationErrors) {
-        //TODO
-        validateMinValue(password.length(), USER_EMAIL, 6, validationErrors);
+        isPasswordValid(password, validationErrors);
     }
 
 }
