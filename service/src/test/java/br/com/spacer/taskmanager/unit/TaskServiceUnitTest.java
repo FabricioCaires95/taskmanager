@@ -71,7 +71,7 @@ class TaskServiceUnitTest extends BaseUnitTest {
     }
 
     @Test
-    void testGetTaskByIdNotFound2() {
+    void testValidateExceptionMessageWhenTaskIsNotFound() {
         when(taskRepository.findById(any())).thenReturn(empty());;
         assertThatThrownBy(() ->
                 victim.getTaskById(DEFAULT_ID))
