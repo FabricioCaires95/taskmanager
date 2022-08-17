@@ -11,7 +11,7 @@ public final class TestConstants {
     public static final String DEFAULT_TITLE = "Learn to code";
     public static final String DEFAULT_USER_NAME = "Joao dos santos";
     public static final String DEFAULT_USER_EMAIL = "joao.test@gmail.com";
-    public static final String DEFAULT_USER_PASSWORD = "teste123";
+    public static final String DEFAULT_USER_PASSWORD = "12@Hpucxz";
     public static final String DEFAULT_DESCRIPTION = "learn java programming";
     public static final OffsetDateTime DEFAULT_FINISH = now().plusDays(2);
     public static final Boolean IS_FINISHED = Boolean.FALSE;

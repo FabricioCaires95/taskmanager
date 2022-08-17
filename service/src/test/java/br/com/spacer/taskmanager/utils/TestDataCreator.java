@@ -10,7 +10,6 @@ import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_ID;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_NAME;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_PASSWORD;
 import static br.com.spacer.taskmanager.utils.TestConstants.IS_FINISHED;
-import static java.util.Collections.singleton;
 
 import br.com.spacer.taskmanager.api.model.CreateTaskDTO;
 import br.com.spacer.taskmanager.api.model.CreateUserDTO;
@@ -53,7 +52,6 @@ public final class TestDataCreator {
             .name(DEFAULT_USER_NAME)
             .email(DEFAULT_USER_EMAIL)
             .password(DEFAULT_USER_PASSWORD)
-            .tasks(singleton(newTask().build()))
             .createdAt(CREATED_AT);
     }
 

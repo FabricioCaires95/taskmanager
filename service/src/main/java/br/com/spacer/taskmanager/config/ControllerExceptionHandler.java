@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import br.com.spacer.taskmanager.api.model.ResponseError;
 import br.com.spacer.taskmanager.exception.InvalidRequestException;
 import br.com.spacer.taskmanager.exception.TaskNotFoundException;
+import br.com.spacer.taskmanager.exception.UserNotFoundException;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler({TaskNotFoundException.class})
+    @ExceptionHandler({TaskNotFoundException.class, UserNotFoundException.class})
     public ResponseEntity<Object> handleNotFoundException(Exception exception) {
         return notFound();
     }
