@@ -33,6 +33,7 @@ public class TaskService {
     }
 
     public TaskDTO createTask(CreateTaskDTO createTaskDTO) {
+        requireNonNull(createTaskDTO.getUserId());
         taskValidator.validate(createTaskDTO);
         var task = taskMapper.fromCreateDtoToEntity(createTaskDTO);
         var savedTask = taskRepository.save(task);

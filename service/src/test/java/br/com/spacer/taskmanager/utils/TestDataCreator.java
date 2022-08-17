@@ -29,12 +29,18 @@ public final class TestDataCreator {
                 .title(DEFAULT_TITLE)
                 .description(DEFAULT_DESCRIPTION)
                 .finishAt(DEFAULT_FINISH)
+                .user(User.newUser()
+                        .id(DEFAULT_ID)
+                        .name(DEFAULT_USER_NAME)
+                        .email(DEFAULT_USER_EMAIL)
+                        .password(DEFAULT_USER_PASSWORD)
+                        .createdAt(CREATED_AT).build())
                 .isFinished(IS_FINISHED)
                 .createdAt(CREATED_AT);
     }
 
     public static CreateTaskDTO newCreateTaskDTO() {
-        return new CreateTaskDTO().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).finishAt(DEFAULT_FINISH);
+        return new CreateTaskDTO().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).finishAt(DEFAULT_FINISH).userId(DEFAULT_USER_ID);
     }
 
     public static UpdateTaskDTO newUpdateTaskDTO() {

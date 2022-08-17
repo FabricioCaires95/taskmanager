@@ -41,6 +41,7 @@ class TaskMapperUnitTest extends BaseUnitTest {
         var entity = victim.fromCreateDtoToEntity(createDto);
 
         assertEquals(entity.getTitle(), createDto.getTitle());
+        assertEquals(entity.getUser().getId(), createDto.getUserId());
         assertEquals(entity.getDescription(), createDto.getDescription());
         assertEquals(entity.getFinishAt(), createDto.getFinishAt());
     }

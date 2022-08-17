@@ -144,6 +144,9 @@ components:
         finishAt:
           type: string
           format: date-time
+        userId:
+          type: string
+          format: uuid
 
     TaskDTO:
       type: object

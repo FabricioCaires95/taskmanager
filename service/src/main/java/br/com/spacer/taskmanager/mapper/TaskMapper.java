@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
+    @Mapping(target = "user.id", source = "createTaskDTO.userId")
     Task fromCreateDtoToEntity(CreateTaskDTO createTaskDTO);
 
     @Mapping(source = "finished", target = "isFinished")

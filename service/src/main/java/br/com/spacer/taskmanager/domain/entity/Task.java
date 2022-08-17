@@ -89,6 +89,10 @@ public class Task {
         return updatedAt;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @PrePersist
     public void prePersist() {
         isFinished = Boolean.FALSE;
