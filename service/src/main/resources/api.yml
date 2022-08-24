@@ -121,6 +121,30 @@ paths:
         404:
           description: 'Not Found'
 
+  /users/{id}:
+    get:
+      summary: 'Return an User by ID'
+      operationId: getUser
+      tags:
+        - user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        404:
+          description: Not Found
+
     put:
       summary: 'Updates User data'
       operationId: updateUser
@@ -147,30 +171,6 @@ paths:
           description: 'Not Found'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-
-  /users/{id}:
-    get:
-      summary: 'Return an User by ID'
-      operationId: getUser
-      tags:
-        - user
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: ID of the user
-          schema:
-            type: string
-            format: uuid
-      responses:
-        200:
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-        404:
-          description: Not Found
 
 components:
   schemas:

@@ -1,7 +1,11 @@
 package br.com.spacer.taskmanager.integration;
 
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_EMAIL;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_ID;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_NAME;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_PASSWORD;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateUserDTO;
+import static br.com.spacer.taskmanager.utils.TestDataCreator.newUpdateUserDTO;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -62,40 +66,40 @@ class UserApiIntegrationTest extends BaseIntegrationTest {
             HttpClientErrorException.NotFound.class,
             () -> api.getUser(DEFAULT_USER_ID));
     }
-//
-//    @Test
-//    void testUpdateTaskSuccess() {
-//        var task = taskRepository.saveAndFlush(newTask().build());
-//
-//        var updateTaskDTO = newUpdateTaskDTO()
-//                .description(task.getDescription().concat("-desc test"))
-//                .title(task.getTitle().concat("-title test"))
-//                .finishAt(task.getFinishAt().plusDays(3));
-//
-//        api.updateTask(task.getId(), updateTaskDTO);
-//
-//        var taskUpdated = taskRepository.findById(task.getId()).orElseThrow();
-//
-//        assertNotNull(taskUpdated);
-//        assertEquals(taskUpdated.getTitle(), updateTaskDTO.getTitle());
-//        assertEquals(taskUpdated.getDescription(), updateTaskDTO.getDescription());
-//        assertEquals(taskUpdated.getFinishAt(), updateTaskDTO.getFinishAt());
-//    }
-//
-//    @Test
-//    void testUpdateTaskIdNotExist() {
-//        assertThrows(
-//                HttpClientErrorException.class,
-//                () -> api.updateTask(DEFAULT_ID, newUpdateTaskDTO())
-//        );
-//    }
-//
-//    @Test
-//    void testErrorWhenTitleDoesNotExist() {
-//        var task = taskRepository.saveAndFlush(newTask().build());
-//        assertThrows(
-//                HttpClientErrorException.class,
-//                () -> api.updateTask(task.getId(), newUpdateTaskDTO().title(StringUtils.EMPTY))
-//        );
-//    }
+
+    @Test
+    void testUpdateTaskSuccess() {
+        var user = userRepository.saveAndFlush(newUser().build());
+
+        var updateUserDto = newUpdateUserDTO()
+                    .email(DEFAULT_USER_EMAIL)
+                    .password(DEFAULT_USER_PASSWORD)
+                    .name(DEFAULT_USER_NAME);
+
+        api.updateUser(user.getId(), updateUserDto);
+
+        var userUpdated = userRepository.findById(user.getId()).orElseThrow();
+
+        assertNotNull(userUpdated);
+        assertEquals(userUpdated.getName(), updateUserDto.getName());
+        assertEquals(userUpdated.getPassword(), updateUserDto.getPassword());
+        assertEquals(userUpdated.getEmail(), updateUserDto.getEmail());
+    }
+
+    @Test
+    void testUpdateUserIdNotExist() {
+        assertThrows(
+                HttpClientErrorException.class,
+                () -> api.updateUser(DEFAULT_USER_ID, newUpdateUserDTO())
+        );
+    }
+
+    @Test
+    void testErrorWhenPasswordIsIncorrect() {
+        var user = userRepository.saveAndFlush(newUser().build());
+        assertThrows(
+                HttpClientErrorException.class,
+                () -> api.updateUser(user.getId(), newUpdateUserDTO().password("abc1234"))
+        );
+    }
 }
