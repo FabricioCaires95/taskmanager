@@ -2,12 +2,15 @@ package br.com.spacer.taskmanager.unit;
 
 import static br.com.spacer.taskmanager.utils.MapperUtils.taskMapper;
 import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_ID;
+import static br.com.spacer.taskmanager.utils.TestConstants.DEFAULT_USER_ID;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newCreateTaskDTO;
 import static br.com.spacer.taskmanager.utils.TestDataCreator.newTask;
+import static java.util.Collections.singletonList;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -78,4 +81,18 @@ class TaskServiceUnitTest extends BaseUnitTest {
                 .hasMessage("Task not found ")
                 .isInstanceOf(TaskNotFoundException.class);
     }
+
+    @Test
+    void testGetTaskByUserIdSuccess() {
+        var entity = newTask().id(DEFAULT_ID).build();
+        when(taskRepository.findTasksByUserId(any())).thenReturn(singletonList(entity));
+
+        var tasks = victim.getTaskByUserId(DEFAULT_USER_ID);
+
+        assertFalse(tasks.isEmpty());
+        assertEquals(1, tasks.size());
+
+        verify(taskRepository).findTasksByUserId(any());
+    }
+
 }

@@ -1,7 +1,9 @@
 package br.com.spacer.taskmanager.service;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +52,13 @@ public class TaskService {
 
     public void deleteTask(UUID id) {
         //TODO
+    }
+
+    public List<TaskDTO> getTaskByUserId(UUID userId) {
+        return taskRepository.findTasksByUserId(userId)
+                .stream()
+                .map(taskMapper::fromEntityToDto)
+                .collect(toList());
     }
 
     private Task getTaskByIdOrThrowNotFound(UUID id) {

@@ -3,6 +3,7 @@ package br.com.spacer.taskmanager.controller;
 import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -48,5 +49,11 @@ public class TaskController implements TasksApi {
     public CompletableFuture<ResponseEntity<Void>> deleteTask(UUID id) {
         return runAsync(() -> taskService.deleteTask(id), controllersExecutors)
                 .thenApply(ResponseEntityUtils::noContent);
+    }
+
+    @Override
+    public CompletableFuture<ResponseEntity<List<TaskDTO>>> getTasksByUserId(UUID userId) {
+        return supplyAsync(() -> taskService.getTaskByUserId(userId), controllersExecutors)
+                .thenApply(ResponseEntityUtils::ok);
     }
 }

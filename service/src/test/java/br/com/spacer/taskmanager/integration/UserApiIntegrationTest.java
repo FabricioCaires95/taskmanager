@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import br.com.spacer.taskmanager.api.facade.UserApi;
 import br.com.spacer.taskmanager.core.BaseIntegrationTest;
 import br.com.spacer.taskmanager.domain.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 class UserApiIntegrationTest extends BaseIntegrationTest {
@@ -29,6 +30,11 @@ class UserApiIntegrationTest extends BaseIntegrationTest {
     @Override
     protected void setupEach() throws Exception {
         setLocalHostBasePath(api.getApiClient(), "/v1");
+    }
+
+    @AfterEach
+    void resetData() {
+        userRepository.deleteAll();
     }
 
     @Test

@@ -1,6 +1,7 @@
 package br.com.spacer.taskmanager.domain.repository;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +12,8 @@ import br.com.spacer.taskmanager.domain.entity.Task;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, UUID> {
+
+    List<Task> findTasksByUserId(UUID userId);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE Task t SET t.title = :title, t.description = :description, t.finishAt = :finishAt WHERE t.id = :uuid")

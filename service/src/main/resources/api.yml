@@ -27,6 +27,29 @@ paths:
         422:
           $ref: '#/components/responses/UnprocessableEntity'
 
+    get:
+      summary: 'Return a list of tasks by user Id'
+      operationId: getTasksByUserId
+      tags:
+        - task
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          description: ID of the user
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDTO'
+
   /tasks/{id}:
     get:
       summary: 'Return a Task by ID'
